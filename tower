@@ -1,0 +1,606 @@
+package tester;
+
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
+/*ArrayList import used to incorporate list of items that could be collected.
+/Image Icon import to use images of each floor within code.
+/JOptionPane import to use JOptionPane windows within code.
+*/
+
+/**
+ *
+ * @author alyvv
+ * @author Omar T
+ */
+
+/*
+Public class called TerrorTower to hold all methods, variables, loops and
+//interact with Tester.
+*/
+
+public class TerrorTower {
+    
+  String userName; 
+  
+  //Instance variable set to userName.
+
+String getuserName(){
+    return userName;
+}
+void setuserName(String user){
+    userName = user;
+}  
+  //Getter-setter method to receive User's input.
+
+private String choice;
+private String choice2;
+private String choice3;
+private String choice4;
+private String choice5;
+private String choice6;
+private String choice7;
+private String choice8;
+private String choice9;
+private String choice10;
+private String choice11;
+private String choice12;
+private String atticKey; 
+private String basementKey;
+
+//private instance variables used to represent each choice User can make
+//and will be used within each Floor method.
+//atticKey/basementKey are used in the contains method.
+
+/*Elevator method: User's input will determine what numbered floor they go to.
+/Integer.parseInt(choice) to convert each choice into a numbered floor.
+/if-else statements and a do while used within this method.
+/For ex, If user types "2", it will take them to Floor 2 by calling Floor2();
+/Do while will allow elevator method to run as long as user's input is >= 0.
+*/
+
+public void Elevator(){
+    
+String choice = JOptionPane.showInputDialog(null, "What floor do you want "
+                + "to go to? Type a number between 0-11. Any other positive number "
+                + "will take you to the attic.");
+
+int choicee = Integer.parseInt(choice);
+//to convert their choice to numbers.
+
+do{
+if(choicee == 0)
+        {
+           Basement();
+        }
+else if (choicee == 1)
+        {
+           Floor1();
+        }
+else if (choicee == 2)
+        {
+           Floor2();
+        }
+else if (choicee == 3)
+        {
+           Floor3();
+        }
+else if (choicee == 4)
+        {
+           Floor4();
+        }
+else if (choicee == 5)
+        {
+           Floor5();
+        }
+else if (choicee == 6)
+        {
+           Floor6();
+        }
+else if (choicee == 7)
+        {
+           Floor7();
+        }
+else if (choicee == 8)
+        {
+           Floor8();
+        }
+else if (choicee == 9)
+        {
+           Floor9();
+        }
+else if (choicee == 10)
+        {
+           Floor10();
+        }
+else if (choicee == 11)
+        {
+           Floor11();  
+        }
+else    {
+           Attic();
+        }
+} while(choicee >= 0);
+}
+
+/* ArrayList is used to show items that can be collected in backpack.
+/ Backpack method will continue updating items in backpack as collected.
+/System.out.println will show User items they have collected as they play
+/explore floors.
+*/ 
+
+ArrayList<String> items = new ArrayList<String>();
+//Represents backpack items in arraylist
+
+/*Attic method will display a picture of the floor
+/Attic method will begin by asking user if they want to explore floor or go back to elevator
+/If they choose elevator, Elevator method is called
+/If they've already collected basementKey, user will be able to enter the attic
+/and collect the atticKey via ArrayList and lastly, will call the Attic method again
+/If they have not collected basementKey, then it will tell user they cannot enter attic
+/and calls the Attic method again.
+*/
+
+
+public void Attic(){
+    
+    ImageIcon attic = new ImageIcon("attic.jpg");    
+      JOptionPane.showMessageDialog(null, "You are now in the attic.", 
+            "You are here", 0, attic
+      
+      ); 
+      
+String choice1 = JOptionPane.showInputDialog(null, "You've reached the attic."
+        + " What do you want to do? 'Explore floor' or 'Go back to elevator'");
+
+if(items.contains(basementKey)){
+           if(choice1.equals("Explore floor"))
+        {
+           
+            atticKey = "Attic Key";
+        
+           if (!items.contains(atticKey)) {
+               JOptionPane.showMessageDialog(null,
+               "You found a chest. Within it is a key to the first floor." );
+               items.add(atticKey);
+               JOptionPane.showMessageDialog(null,"Backpack:" + items); 
+           Attic();
+           }    
+           else {
+               JOptionPane.showMessageDialog(null, "You've already collected "
+                + "this item.");
+                }
+           Attic();
+           } 
+           
+           else  
+           {
+          Elevator();
+           }}
+
+else    {
+        JOptionPane.showMessageDialog(null, "You can not enter the attic.");
+           Elevator();
+        }}
+
+
+/*Basement method will show a picture of the basement. It will then ask if you want to 
+/go to the Boiler room, Storage room, or Elevator. 
+/If User asks for the elevator then it will call on the elevator method. 
+/If they ask for Boiler room and do not already have the wallet, contains method will
+/collect the wallet and a message will show them what items they have.
+/Otherwise, it will tell the user they already've collected the item and calls
+/the basement method again. 
+*/
+
+public void Basement(){
+    
+    ImageIcon basement = new ImageIcon("basement.jpg");    
+      JOptionPane.showMessageDialog(null, "You are now on the basement.", 
+            "You are here", 0, basement); 
+    
+String choice2 = JOptionPane.showInputDialog(null, "Where do you want "
+                + "to go? 'Boiler room' or 'Storage room' or 'Elevator'?");
+   
+if(choice2.equals("Boiler room"))
+        {
+           String wallet = "Wallet";
+           
+           if (!items.contains(wallet)){
+               JOptionPane.showMessageDialog(null, "You found a wallet. No money"
+                       + " though.");
+               items.add(wallet);
+               JOptionPane.showMessageDialog(null, "Backpack:" + items);
+              }
+            else{
+               JOptionPane.showMessageDialog(null, "You've already collected this item.");
+              }
+               Basement();
+        }
+else if (choice2.equals("Storage room"))
+        {
+           
+            basementKey = "Basement Key";
+           
+           if (!items.contains(basementKey)) {
+               JOptionPane.showMessageDialog(null,
+               "You found a chest. Within it is a key to the attic.");
+               
+               items.add(basementKey);
+              JOptionPane.showMessageDialog(null,"Backpack:" + items);
+              Basement();
+              
+              } else {
+               JOptionPane.showMessageDialog(null, "You've already collected the item here.");    
+              Basement();
+                  }}
+
+else    {
+           Elevator();
+        }}
+    
+/*Floor1 method will begin by displaying an image of the floor.
+/Then asks User if they want to try to leave or go back to elevator.
+/If they choose to try to leave and they DON'T have the Attic Key,
+/then a message will pop up telling User they cannot leave the tower. Then the Floor1
+/method is called again.
+/If they try to leave and they DO have the attic key, then a message will pop up
+/telling user they've left the tower.
+/If they choose the elevator, then the Elevator method is called.
+*/
+
+public void Floor1(){
+    
+      ImageIcon floor1 = new ImageIcon("floor1.jpg");    
+      JOptionPane.showMessageDialog(null, "You are now on floor 1.", 
+            "You are here", 0, floor1); 
+      
+      String choice3 = JOptionPane.showInputDialog(null, "What do you want "
+                + "to do next? 'Try to leave' or 'Go back to elevator'");  
+
+
+        if(choice3.equals("Try to leave")){ 
+           
+            String atticKey = "Attic Key";
+          
+        if (items.contains(atticKey)) {
+            JOptionPane.showMessageDialog(null,
+            "You have left the tower." );
+            System.exit(0);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null,"You can't leave the tower yet.");
+           
+          
+        }Floor1();} 
+        else
+        {
+            Elevator();
+        }}
+
+/*Floors 2-9 are similar in content and style.
+/Floor method will begin by displaying an image of the floor.
+/Then asks User if they want to explore floor or go back to elevator.
+/If they choose to explore floor, an item will be collected if the ArrayList "items"
+/doesn't already contain the item. Then a message will show User what items they carry.
+/If user already collected item and returns to the same floor, because the item is
+/already in their ArrayList ("backpack") then a message will tell User they've already
+/collected item and recalls that floor's method again.
+/If they choose the elevator, then the Elevator method is called.
+*/
+
+public void Floor2(){
+    
+    ImageIcon floor2 = new ImageIcon("floor2.jpg");    
+      JOptionPane.showMessageDialog(null, "You are now on floor 2.", 
+            "You are here", 0, floor2); 
+    
+    String choice4 = JOptionPane.showInputDialog(null, "What do you want "
+                + "to do next? 'Explore floor' or 'Go back to elevator'"); 
+    
+    if(choice4.equals("Explore floor"))
+    {
+       String flashlight = "Flash light";
+          
+          if (!items.contains(flashlight)){
+               JOptionPane.showMessageDialog(null, "You found a flashlight. It has been"
+                       + " added to your backpack.");
+               items.add(flashlight);
+               JOptionPane.showMessageDialog(null, "Backpack:" + items);
+               Floor2();
+              }
+          else{
+               JOptionPane.showMessageDialog(null, "You've already collected this item.");
+               Floor2();
+              }}
+    else
+              {
+                Elevator();  
+              }}
+    
+public void Floor3(){
+    
+    ImageIcon floor3 = new ImageIcon("floor3.jpg");    
+      JOptionPane.showMessageDialog(null, "You are now on floor 3.", 
+            "You are here", 0, floor3); 
+    
+    String choice5 = JOptionPane.showInputDialog(null, "Where do you want "
+                + "to go? 'Explore floor' or 'Elevator'?");
+   
+if(choice5.equals("Explore floor"))
+        {
+           String knife = "Knife";
+           
+           if (!items.contains(knife)){
+               JOptionPane.showMessageDialog(null, "You found a knife. There's"
+                       + " blood on it. It's been added to your backpack.");
+               items.add(knife);
+               JOptionPane.showMessageDialog(null, "Backpack:" + items);
+               Floor3();
+        }
+            else{
+               JOptionPane.showMessageDialog(null, "You've already collected this item.");
+               Floor3();
+              }}
+else    {
+           Elevator();
+        }}
+
+public void Floor4(){
+    
+    ImageIcon floor4 = new ImageIcon("floor4.jpg");    
+      JOptionPane.showMessageDialog(null, "You are now on floor 4.", 
+            "You are here", 0, floor4); 
+    
+    String choice6 = JOptionPane.showInputDialog(null, "Where do you want "
+                + "to go? 'Explore floor' or 'Elevator'?");
+   
+if(choice6.equals("Explore floor"))
+        {
+           String brush = "Brush";
+           
+           if (!items.contains(brush)){
+               JOptionPane.showMessageDialog(null, "You found a brush. "
+                       + "It's been added to your backpack.");
+               items.add(brush);
+               JOptionPane.showMessageDialog(null, "Backpack:" + items);
+               Floor4();
+        }
+            else{
+               JOptionPane.showMessageDialog(null, "You've already collected this item.");
+               Floor4();
+              }}
+else    {
+           Elevator();
+        }}
+
+public void Floor5(){
+    
+    ImageIcon floor5 = new ImageIcon("floor5.jpg");    
+      JOptionPane.showMessageDialog(null, "You are now on floor 5.", 
+            "You are here", 0, floor5); 
+    
+    String choice7 = JOptionPane.showInputDialog(null, "Where do you want "
+                + "to go? 'Explore floor' or 'Elevator'?");
+   
+if(choice7.equals("Explore floor"))
+        {
+           String gun = "Gun";
+           
+           if (!items.contains(gun)){
+               JOptionPane.showMessageDialog(null, "You found a gun. "
+                       + "It's been added to your backpack.");
+               items.add(gun);
+               JOptionPane.showMessageDialog(null, "Backpack:" + items);
+               Floor5();
+        }
+            else{
+               JOptionPane.showMessageDialog(null, "You've already collected this item.");
+               Floor5();
+              }}
+else    {
+           Elevator();
+        }}
+
+public void Floor6(){
+    
+    ImageIcon floor6 = new ImageIcon("floor6.jpg");    
+      JOptionPane.showMessageDialog(null, "You are now on floor 6.", 
+            "You are here", 0, floor6); 
+    
+    String choice8 = JOptionPane.showInputDialog(null, "Where do you want "
+                + "to go? 'Explore floor' or 'Elevator'?");
+   
+if(choice8.equals("Explore floor"))
+        {
+           String mask = "Mask";
+           
+           if (!items.contains(mask)){
+               JOptionPane.showMessageDialog(null, "You found a mask. "
+                       + "It's been added to your backpack.");
+               items.add(mask);
+               JOptionPane.showMessageDialog(null, "Backpack:" + items);
+               Floor6();
+        }
+            else{
+               JOptionPane.showMessageDialog(null, "You've already collected this item.");
+               Floor6();
+              }}
+else    {
+           Elevator();
+        }}
+
+public void Floor7(){
+    
+    ImageIcon floor7 = new ImageIcon("floor7.jpg");    
+      JOptionPane.showMessageDialog(null, "You are now on floor 7.", 
+            "You are here", 0, floor7); 
+      
+    String choice9 = JOptionPane.showInputDialog(null, "Where do you want "
+                + "to go? 'Explore floor' or 'Elevator'?");
+   
+if(choice9.equals("Explore floor"))
+        {
+           String shoe = "Shoe";
+           
+           if (!items.contains(shoe)){
+               JOptionPane.showMessageDialog(null, "You found a shoe. "
+                       + "It's been added to your backpack.");
+               items.add(shoe);
+               JOptionPane.showMessageDialog(null, "Backpack:" + items);
+               Floor7();
+        }
+            else{
+               JOptionPane.showMessageDialog(null, "You've already collected this item.");
+               Floor7();
+              }}
+else    {
+           Elevator();
+        }}
+
+public void Floor8(){
+    
+    ImageIcon floor8 = new ImageIcon("floor8.jpg");    
+      JOptionPane.showMessageDialog(null, "You are now on floor 8.", 
+            "You are here", 0, floor8); 
+    
+    String choice10 = JOptionPane.showInputDialog(null, "Where do you want "
+                + "to go? 'Explore floor' or 'Elevator'?");
+   
+if(choice10.equals("Explore floor"))
+        {
+           String canOpener = "Canopener";
+           
+           if (!items.contains(canOpener)){
+               JOptionPane.showMessageDialog(null, "You found a can opener. "
+                       + "It's been added to your backpack.");
+               items.add(canOpener);
+               JOptionPane.showMessageDialog(null, "Backpack:" + items);
+               Floor8();
+        }
+            else{
+               JOptionPane.showMessageDialog(null, "You've already collected this item.");
+               Floor8();
+              }}
+else    {
+           Elevator();
+        }}
+
+public void Floor9(){
+    
+    ImageIcon floor9 = new ImageIcon("floor9.jpg");    
+      JOptionPane.showMessageDialog(null, "You are now on floor 9.", 
+            "You are here", 0, floor9); 
+      
+    String choice11 = JOptionPane.showInputDialog(null, "Where do you want "
+                + "to go? 'Explore floor' or 'Elevator'?");
+   
+if(choice11.equals("Explore floor"))
+        {
+           String bloodSample = "Blood Sample";
+           
+           if (!items.contains(bloodSample)){
+               JOptionPane.showMessageDialog(null, "You found blood stains on"
+                       + " the wall. You used your brush to collect a sample. "
+                       + "It's been added to your backpack.");
+               items.add(bloodSample);
+               JOptionPane.showMessageDialog(null, "Backpack:" + items);
+               Floor9();
+        }
+            else{
+               JOptionPane.showMessageDialog(null, "You've already collected the sample.");
+               Floor9();
+              }}
+else    {
+           Elevator();
+        }}
+
+public void Floor10(){
+    
+    ImageIcon floor10 = new ImageIcon("floor10.jpg");    
+      JOptionPane.showMessageDialog(null, "You are now on floor 10.", 
+            "You are here", 0, floor10); 
+    
+    String choice12 = JOptionPane.showInputDialog(null, "Where do you want "
+                + "to go? 'Explore floor' or 'Elevator'?");
+   
+if(choice12.equals("Explore floor"))
+        {
+            int dog = Integer.parseInt(JOptionPane.showInputDialog(null, "How many"
+                    + " times do you want to pet the dog?"));
+            int i = 0;
+            while(i < dog){
+                JOptionPane.showMessageDialog(null, "You have petted the dog.");
+                i++;
+                          }
+        
+             JOptionPane.showMessageDialog(null, "You have petted the dog " + dog + 
+                " times. As soon as you " + "stopped peting the dog you died.");
+             
+            ImageIcon floor10a = new ImageIcon("floor10.jpg");    
+      JOptionPane.showMessageDialog(null, "You have died on floor 10.", 
+            "You are here", 0, floor10a);  
+             
+             System.exit(0);
+
+        }   
+else    {
+           Elevator();
+        }}
+
+/* Floor 10 method contains the while loop. 
+/If User explores this floor, they will be asked how many dogs they want to pet.
+/Variable dog represents how many times they want to pet the dog. 
+/As long as the number the User chooses is < dog , then the while loop runs.
+/Lastly, once User picks a number, it will tell User that they've petted that number
+/of dogs and they died afterwards.
+/System.exit(0); stops the program from running.
+/If they choose elevator, Elevator method is called again. 
+*/
+
+public void Floor11(){
+    
+    ImageIcon floor11 = new ImageIcon("floor11.jpg");    
+      JOptionPane.showMessageDialog(null, "You are now on floor 11.", 
+            "You are here", 0, floor11); 
+    
+    String choice13 = JOptionPane.showInputDialog(null, "Where do you want "
+                + "to go? 'Explore floor' or 'Elevator'?");
+   
+if(choice13.equals("Explore floor"))
+    
+        {
+          int cat = Integer.parseInt(JOptionPane.showInputDialog(null, "How many times do you"
+                  + " you want to pet the cat?"));
+          for (int i = 0; i < cat; i++){
+          JOptionPane.showMessageDialog(null, "You have petted the cat.");    
+         }
+          JOptionPane.showMessageDialog(null, "You have petted " + cat 
+          + " times. As soon as you stopped petting the cat, you died.");
+          
+          ImageIcon floor11a = new ImageIcon("floor11.jpg");    
+      JOptionPane.showMessageDialog(null, "You have died on floor 11.", 
+            "You are here", 0, floor11a); 
+          
+          System.exit(0);
+          
+          
+         }
+      
+ else    {
+           Elevator();
+         }}}
+
+/*Floor 11 method contains the for loop. 
+/If User explores this floor, they will be asked how many cats they want to pet.
+/Variable cat is made and converted to int to represent how many times User wants to pet the cat.
+/The loop will run as many times as they choose to pet.
+/A message will then pop up saying they have petted the cat the amount of times
+/the user wanted. After that, the user will die. 
+/System.exit(0); stops the program from running.
+/If they choose elevator, Elevator method is called again. 
+*/
+
+    
